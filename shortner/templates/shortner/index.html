@@ -129,7 +129,8 @@
                 },
 
                 success: function(data){
-                    $('#display').val("localhost:8000/"+ data)
+                    render_url= 'https://urlshortener-6565.onrender.com/'
+                    $('#display').val(render_url+ data)
                 }
 
                 });
