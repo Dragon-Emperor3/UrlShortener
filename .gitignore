@@ -1,0 +1,4 @@
+UrlShortner/.env
+UrlShortner/.db.sqlite3
+UrlShortner/__pycache__
+UrlShortner/.__init__.py

@@ -1,0 +1,147 @@
+{% load static %}
+<head>
+
+    {% comment %} Bootstrap Cdn links {% endcomment %}
+    <script  src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    {% comment %} Font Links {% endcomment %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+
+    {% comment %} Font Awesome icons {% endcomment %}
+    <script src="https://kit.fontawesome.com/9d3a6cbb89.js" crossorigin="anonymous"></script>
+
+    <style>
+         
+        body
+        {
+            height:100vh;
+            width:100vw;
+            background-image: url("{% static 'images/background2.png' %}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            font-family: 'Pangolin', cursive;
+        }
+
+        h1
+        {
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        .main
+        {
+            color: #fff;
+            background-color: #4361ee;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 0 10px 7px #fff;
+        }
+
+        #input
+        {
+            background-color: #fefae0;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }   
+
+        .form{
+            width:45vw; 
+            min-width:400px;
+        }
+
+        #display
+        {
+            display:flex;
+            background-color: #e5e5e5;
+            height:50px;
+            border-radius: 25px;
+            align-items:center;
+            padding: 10px 60px 10px 20px;
+            width:45vw; 
+            min-width:400px;
+            outline: none;
+            border: none;
+        }
+
+        .button
+        {
+            position: relative;
+            right: 40;
+            outline: none;
+            border: none;
+            background-color: transparent;
+            font-size: 20px;
+        }
+        
+    </style>
+</head>
+    
+<body class="d-flex justify-content-center align-items-center"> 
+    {% comment %} 
+        <h1>URL Shortener</h1>
+        <form class="input-group">
+            <div class="mb-4 form-outline" id="container">
+                <input type="text" id="form1Example1" class="form-control" placeholder="Paste the Link here..."/>
+            </div>
+            <button type="submit" class="btn btn-primary ">Convert</button>
+        </form> 
+    {% endcomment %}
+        <div class='main'>
+            <h1>URL Shortener</h1>            
+            <div class="d-flex justify-content-center" id="container">
+                <form method="post" action="" class="input-group form">
+                    {% csrf_token %}
+                    <input type="text" class="form-control input" id="input" placeholder="Paste/Enter the link here.."/>
+                    <button class="btn btn-dark" type="submit" style='width:10vw; min-width:100px;' data-mdb-ripple-color="dark">
+                        Convert
+                    </button>
+                </form>
+            </div>
+            <hr>
+
+            <div class="d-flex" id="container">
+                <input type="text" value="" id="display"  placeholder="Shorten will be displayed here..." readonly>
+                <button class="button" id="copy"><i class="fa-regular fa-copy"></i></button>
+
+            </div>
+        </div>
+        
+    <script type='text/javascript'>
+
+        $(document).ready(function()
+        {
+            $('#input').val('');
+            $('#display').val('');
+            $(document).on('submit', '.form', function(e){
+
+                e.preventDefault();
+                $.ajax({
+                type: 'POST',
+                url: '/create',
+                data:
+                {
+                    link: $('#input').val(), 
+                    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),             
+                },
+
+                success: function(data){
+                    $('#display').val("localhost:8000/"+ data)
+                }
+
+                });
+
+            });            
+            
+            $("#copy").click(function(){
+                $("#display").select();
+                document.execCommand("copy"); 
+            });
+
+        });
+
+    </script>
+</body>
