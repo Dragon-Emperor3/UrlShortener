@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 <head>
 
     {% comment %} Bootstrap Cdn links {% endcomment %}
@@ -129,7 +129,7 @@
                 },
 
                 success: function(data){
-                    render_url= 'https://urlshortener-6565.onrender.com/'                
+                    render_url= 'https://urlshortenerdb.onrender.com/'                
                     $('#display').val(render_url+ data)
                 }
 
