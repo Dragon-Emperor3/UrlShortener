@@ -129,7 +129,9 @@
                 },
 
                 success: function(data){
-                    render_url= 'https://urlshortenerdb.onrender.com/'                
+                    render_url= 'https://urlshortenerdb.onrender.com/'    //For live server
+                    // render_url= 'localhost/'    //For local server
+
                     $('#display').val(render_url+ data)
                 }
 
